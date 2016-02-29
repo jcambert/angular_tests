@@ -24,14 +24,14 @@
                         </div>
                         <div class="profile_info">
                             <span>{{'welcome' | translate}},</span>
-                            <h2>Anthony Fernando</h2>
+                            <h2>{{user.fullname}}</h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
 
                     <br />
                     <!-- sidebar menu -->
-                    <w-sidebar-menu></w-sidebar-menu>
+                    <w-sidebar></w-sidebar>
                     <!-- /sidebar menu -->
                     
                     <!-- sidebar footer -->
@@ -46,13 +46,38 @@
            </div>
            
            <!-- top navigation -->
-            <w-topbar-menu>
-                    <li class="">
-                        <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <w-topbar>
+                <w-topbar-dropdown>
+                    <w-topbar-dropdown-header class="user-profile">
+                         <img ng-src={{user.photo}} alt="">{{user.fullname}} <span class=" fa fa-angle-down"></span>
+                    </w-topbar-dropdown-header >
+                    <w-topbar-dropdown-items>
+                        <w-topbar-dropdown-item>
+                            <a href="javascript:;" tooltip-placement="left" uib-tooltip="{{'profile-tooltip' |translate}}"> <i class="fa fa-user pull-right"></i> {{ 'profile' | translate}}</a>
+                            
+                        </w-topbar-dropdown-item>
+                         <w-topbar-dropdown-item>
+                            <a href="javascript:;" tooltip-placement="left" uib-tooltip="{{'settings-tooltip' |translate}}">
+                                <i class="fa fa-gear pull-right"></i>
+                                <span class="badge bg-red pull-right">50%</span>
+                                <span>{{'settings' | translate}}</span>
+                            </a>
+                        </w-topbar-dropdown-item>
+                        <w-topbar-dropdown-item divider>
+                            <a href="javascript:;" tooltip-placement="left" uib-tooltip="{{'help-tooltip' |translate}}"><i class="fa fa-question pull-right"></i>{{'help' | translate }}</a>
+                        </w-topbar-dropdown-item>
+                        <w-topbar-dropdown-item >
+                            <a href="login.html" tooltip-placement="left" uib-tooltip="{{'logout-tooltip' |translate}}"><i class="fa fa-sign-out pull-right"></i>{{'logout' | translate}}</a>
+                        </w-topbar-dropdown-item>
+                    </w-topbar-dropdown-items> 
+                </w-topbar-dropdown>
+                
+                    <li class="" uib-dropdown>
+                        <a class="user-profile" uib-dropdown-toggle >
                             <img src="images/img.jpg" alt="">John Doe
                             <span class=" fa fa-angle-down"></span>
                         </a>
-                        <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
+                        <ul class="dropdown-usermenu animated fadeInDown pull-right" uib-dropdown-menu >
                             <li><a href="javascript:;">  Profile</a>
                             </li>
                             <li>
@@ -68,8 +93,8 @@
                             </li>
                         </ul>
                     </li>
-                       <li role="presentation" class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                       <li role="presentation" uib-dropdown>
+                            <a  class="dropdown-toggle info-number" uib-dropdown-toggle  aria-expanded="false">
                                 <i class="fa fa-envelope-o"></i>
                                 <span class="badge bg-green">6</span>
                             </a>
@@ -141,19 +166,22 @@
                             </ul>
                         </li>
 
-            </w-topbar-menu>
+            </w-topbar>
             <!-- /top navigation -->
        </div>
     </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-cookies.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.10.0/angular-translate.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.0/angular-locale_fr-fr.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.10.0/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.10.0/angular-translate-storage-local/angular-translate-storage-local.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.10.0/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.1/ui-bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.1/ui-bootstrap-tpls.min.js"></script>
         <script src="app.js"></script>
         <script src="demo.js"></script>
         <script>

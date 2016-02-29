@@ -3,5 +3,11 @@
     "settings":"Parametres",
     "fullscreen":"Plein ecran",
     "lock":"Verouillage",
-    "logout":"Deconnexion"
+    "logout":"Deconnexion",
+    "profile":"Compte",
+    "help":"Aide",
+    "profile-tooltip":"Gerer votre compte",
+    "settings-tooltip":"Gestion des parametres",
+    "help-tooltip":"Acceder à l'aide",
+    "logout-tooltip":"Déconnexion du soft"
 }

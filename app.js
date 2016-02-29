@@ -1,6 +1,6 @@
 (function (window,angular,$) {
     'use strict';
-    var weberp = window.weberp = angular.module('weberp', ['ngCookies','ui.router','pascalprecht.translate']);
+    var weberp = window.weberp = angular.module('weberp', ['ui.bootstrap','ngCookies','ngAnimate','ui.router','pascalprecht.translate']);
     
     weberp.constant('LOCALES', {
         'locales': {
@@ -35,7 +35,7 @@
     
     
     
-    weberp.directive('wSidebarMenu', ['$log','$timeout',function ($log,$timeout) {
+    weberp.directive('wSidebar', ['$log','$timeout',function ($log,$timeout) {
         return {
             restrict: 'E',
             replace: true,
@@ -147,7 +147,7 @@
           },
           controller:function($scope){},
           link:function($scope,$element,$attrs){
-              var elt=angular.element('<a data-toggle="tooltip" data-placement="top" title="{{ title | translate }}"><span class="glyphicon glyphicon-{{icon}}" aria-hidden="true"></span></a>');
+              var elt=angular.element('<a tooltip-placement="top" uib-tooltip="{{ title | translate }}"><span class="glyphicon glyphicon-{{icon}}" aria-hidden="true"></span></a>');
               $scope.title=$attrs.title;
               $scope.icon=$attrs.icon;
               var c=$compile(elt)($scope);
@@ -158,12 +158,64 @@
     }]);
     
     
-    weberp.directive('wTopbarMenu',[function(){
+    weberp.directive('wTopbar',[function(){
         return{
           restrict:'E',
           replace:true,
           transclude:true,
           template:'<div class="top_nav"><div class="nav_menu"><nav class="" role="navigation"><div class="nav toggle"><a id="menu_toggle"><i class="fa fa-bars"></i></a></div><ul class="nav navbar-nav navbar-right" ng-transclude></ul></nav></div></div>'  
+        };
+    }]);
+    
+    weberp.directive('wTopbarDropdown',[function(){
+        return{
+          restrict:'E',
+          replace:true, 
+          transclude:true, 
+          template:'<li class="" uib-dropdown ng-transclude></li>'
+        };
+    }]);
+    
+    weberp.directive('divider',['$log',function($log){
+        return{
+          restrict:'A',
+          replace:true, 
+          //template:'<li class="" uib-dropdown ng-transclude></li>'
+          link:function($scope,$element,$attrs){
+              $log.log($element);
+              var elt=angular.element('<li class="divider"></li>');
+              //$element.parent().append(elt);
+              $element.after(elt);
+              
+          }
+        };
+    }]);
+    
+    weberp.directive('wTopbarDropdownHeader',[function(){
+        return{
+            restrict:'E',
+            replace:true,
+            transclude:true,
+            template:'<a uib-dropdown-toggle ng-transclude></a>' 
+        }
+    }]);
+    
+    weberp.directive('wTopbarDropdownItems',[function(){
+        return{
+            restrict:'E',
+            replace:true,
+            transclude:true,
+            template:'<ul class="animated fadeInDown pull-right" uib-dropdown-menu ng-transclude ></ul>'
+            
+        };
+    }]);
+    
+    weberp.directive('wTopbarDropdownItem',[function(){
+        return{
+          restrict:'E',
+          replace:true,
+          transclude:true,
+          template:'<li ng-transclude></li>'
         };
     }]);
 })(window,angular,$);
