@@ -2,17 +2,164 @@
 <html lang="fr">
 
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="custom.css">
 </head>
-<body ng-app="weberp">
-    <div ng-controller="main">   
-        {{title}}
-        <w-sidebar-menu>
-        </w-sidebar-menu>
+<body class="nav-md pace-done" ng-app="weberp" ng-cloak>
+    <div class="container body" ng-controller="main">   
+       <div class="main_container">
+           <div class="col-md-3 left_col">
+               <div class="left_col scroll-view">
+                   
+                   <div class="navbar nav_title" style="border: 0;">
+                        <a ui-sref="home" class="site_title"><i class="fa fa-{{appIcon}}"  ></i> <span>{{appTitle}}</span></a>
+                    </div>
+                    <div class="clearfix"></div>
+                    
+                    <!-- menu profile quick info -->
+                    <div class="profile">
+                        <div class="profile_pic">
+                            <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>{{'welcome' | translate}},</span>
+                            <h2>Anthony Fernando</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+                    <!-- sidebar menu -->
+                    <w-sidebar-menu></w-sidebar-menu>
+                    <!-- /sidebar menu -->
+                    
+                    <!-- sidebar footer -->
+                    <w-sidebar-footer> 
+                        <w-sidebar-footer-item title="settings" icon="cog"></w-sidebar-footer-item>
+                        <w-sidebar-footer-item title="fullscreen" icon="fullscreen"></w-sidebar-footer-item>
+                        <w-sidebar-footer-item title="lock" icon="eye-close"></w-sidebar-footer-item>
+                        <w-sidebar-footer-item title="logout" icon="off"></w-sidebar-footer-item>
+                    </w-sidebar-footer>
+                    <!-- /sidebar footer -->
+               </div>
+           </div>
+           
+           <!-- top navigation -->
+            <w-topbar-menu>
+                    <li class="">
+                        <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <img src="images/img.jpg" alt="">John Doe
+                            <span class=" fa fa-angle-down"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
+                            <li><a href="javascript:;">  Profile</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="badge bg-red pull-right">50%</span>
+                                    <span>Settings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">Help</a>
+                            </li>
+                            <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                            </li>
+                        </ul>
+                    </li>
+                       <li role="presentation" class="dropdown">
+                            <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-envelope-o"></i>
+                                <span class="badge bg-green">6</span>
+                            </a>
+                            <ul id="menu1" class="dropdown-menu list-unstyled msg_list animated fadeInDown" role="menu">
+                                <li>
+                                    <a>
+                                        <span class="image">
+                                    <img src="images/img.jpg" alt="Profile Image" />
+                                </span>
+                                        <span>
+                                    <span>John Smith</span>
+                                        <span class="time">3 mins ago</span>
+                                        </span>
+                                        <span class="message">
+                                    Film festivals used to be do-or-die moments for movie makers. They were where... 
+                                </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="image">
+                                    <img src="images/img.jpg" alt="Profile Image" />
+                                </span>
+                                        <span>
+                                    <span>John Smith</span>
+                                        <span class="time">3 mins ago</span>
+                                        </span>
+                                        <span class="message">
+                                    Film festivals used to be do-or-die moments for movie makers. They were where... 
+                                </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="image">
+                                    <img src="images/img.jpg" alt="Profile Image" />
+                                </span>
+                                        <span>
+                                    <span>John Smith</span>
+                                        <span class="time">3 mins ago</span>
+                                        </span>
+                                        <span class="message">
+                                    Film festivals used to be do-or-die moments for movie makers. They were where... 
+                                </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="image">
+                                    <img src="images/img.jpg" alt="Profile Image" />
+                                </span>
+                                        <span>
+                                    <span>John Smith</span>
+                                        <span class="time">3 mins ago</span>
+                                        </span>
+                                        <span class="message">
+                                    Film festivals used to be do-or-die moments for movie makers. They were where... 
+                                </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="text-center">
+                                        <a href="inbox.html">
+                                            <strong>See All Alerts</strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+
+            </w-topbar-menu>
+            <!-- /top navigation -->
+       </div>
     </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-cookies.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.10.0/angular-translate.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.0/angular-locale_fr-fr.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.10.0/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.10.0/angular-translate-storage-local/angular-translate-storage-local.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.10.0/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
         <script src="app.js"></script>
         <script src="demo.js"></script>
+        <script>
+            $(document).ready(function () {
+              //$('#sidebar-menu li ul').slideUp();
+            });
+        </script>
 </body>
 </html>
