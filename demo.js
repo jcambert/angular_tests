@@ -42,13 +42,15 @@
                     },
                     {
                         icon:'building-o',
-                        text:'Article',
-                        tooltip:'article-management',
+                        text:'Articles',
+                        tooltip:'article-management-tooltip',
                         childs:[
                             {
                                 id:0,
                                 text:'accueil 3',
-                                state:'state1'
+                                state:'state1',
+                               //tooltip:'Tous les articles'
+                                
                             },
                             {
                                 id:1,

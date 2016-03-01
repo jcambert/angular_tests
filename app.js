@@ -1,6 +1,6 @@
 (function (window,angular,$) {
     'use strict';
-    var weberp = window.weberp = angular.module('weberp', ['ui.bootstrap','ngCookies','ngAnimate','ui.router','pascalprecht.translate']);
+    var weberp = window.weberp = angular.module('weberp', ['ui.bootstrap','ngCookies','ngAnimate','ui.router','pascalprecht.translate','tmh.dynamicLocale']);
     
     weberp.constant('LOCALES', {
         'locales': {
@@ -18,11 +18,14 @@
         $translateProvider.useStaticFilesLoader({
             //prefix: 'resources/locale-',// path to translations files
             prefix: 'locale-',
-            suffix: '.json'// suffix, currently- extension of the translations
+            suffix: '.json'
         });
-        $translateProvider.preferredLanguage('fr_FR');// is applied on first load
-        $translateProvider.useLocalStorage();// saves selected language to localStorage
+        $translateProvider.preferredLanguage('fr_FR');
+        $translateProvider.useLocalStorage();
         /* /Translation */
+        
+        
+        
         console.info('WebErp is configured');
     }]);
     weberp.run([function(){
@@ -32,8 +35,15 @@
         });
     }]);
     
+    /* Translation */
+    weberp.service('LocaleService',[function(){
+        
+    }]);
     
-    
+    weberp.directive('wTranslate',[function(){
+        
+    }]);
+    /* /Translation */
     
     weberp.directive('wSidebar', ['$log','$timeout',function ($log,$timeout) {
         return {
@@ -44,7 +54,8 @@
                 
             },
             controller:function($scope){},
-            template:'<div id="sidebar-menu" class="main_menu_side hidden-print main_menu"><w-menu-section ng-repeat="section in menuSections" ng-transclude><h3>{{section.title}}</h3><ul class="nav side-menu"><li ng-repeat="menu in section.menus"><a><i class="fa fa-{{menu.icon}}"></i>{{menu.text}}<span class="fa fa-chevron-down"></span></a><w-menu-item ></w-menu-item></li></ul></w-menu-section></div>',
+            template:'<div id="sidebar-menu" class="main_menu_side hidden-print main_menu"><w-menu-section ng-repeat="section in menuSections" ng-transclude><h3>{{section.title}}</h3>' + 
+            '<ul class="nav side-menu"><li ng-repeat="menu in section.menus"><a tooltip-placement="right" uib-tooltip="{{menu.tooltip | translate}}"><i class="fa fa-{{menu.icon}}"></i>{{menu.text}}<span class="fa fa-chevron-down"></span></a><w-menu-item ></w-menu-item></li></ul></w-menu-section></div>',
             link:function($scope,$element,$attrs){
                 $timeout(function(){
                    
@@ -97,9 +108,7 @@
                 
             },
             template:'<ul class="nav" ng-class="{\'child_menu\': menu.childs && menu.childs.length>0}"><li ng-repeat="child in menu.childs"><w-menu-subitem "></w-menu-subitem></li></ul>',
-            link:function($scope,$element,$attrs){
-                if(angular.isDefined($scope.))
-            }
+           
             
         };
     }]);
@@ -111,7 +120,7 @@
             require: '^wMenuItem',
 
             link:function ($scope,$element,$attrs) {
-                var elt=angular.element('<a>{{child.text}}<span ng-if="child.label" class="label label-{{child.label.variation}} pull-right">{{child.label.text}}</span></a>');
+                var elt=angular.element('<a uib-tooltip="{{child.tooltip| translate}}" tooltip-placement="right">{{child.text}}<span ng-if="child.label" class="label label-{{child.label.variation}} pull-right">{{child.label.text}}</span></a>');
                 if (angular.isDefined($scope.child.state) && $scope.child.state !== "")
                     elt.attr('ui-sref',$scope.child.state);
                 if (angular.isDefined($scope.child.link) && $scope.child.link !== "")
