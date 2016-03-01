@@ -97,6 +97,9 @@
                 
             },
             template:'<ul class="nav" ng-class="{\'child_menu\': menu.childs && menu.childs.length>0}"><li ng-repeat="child in menu.childs"><w-menu-subitem "></w-menu-subitem></li></ul>',
+            link:function($scope,$element,$attrs){
+                if(angular.isDefined($scope.))
+            }
             
         };
     }]);
@@ -116,7 +119,7 @@
                 if (angular.isDefined($scope.child.label)){
                     var label=angular.element('')
                 }
-                    
+                
                 var c=$compile(elt)($scope);
                 
                 $element.replaceWith(c);
@@ -163,8 +166,40 @@
           restrict:'E',
           replace:true,
           transclude:true,
-          template:'<div class="top_nav"><div class="nav_menu"><nav class="" role="navigation"><div class="nav toggle"><a id="menu_toggle"><i class="fa fa-bars"></i></a></div><ul class="nav navbar-nav navbar-right" ng-transclude></ul></nav></div></div>'  
+          template:'<div class="top_nav"><div class="nav_menu"><nav class="" role="navigation"><div class="nav toggle"><w-fa-bars  tooltip-placement="right" uib-tooltip="{{\'toggle-menu-tooltip\' | translate}}"></w-fa-bars></div><ul class="nav navbar-nav navbar-right" ng-transclude></ul></nav></div></div>',
         };
+    }]);
+    
+    weberp.directive('wFaBars',['$log','$document',function($log, $document){
+        return{
+            restrict:'E',
+            replace:true,
+            template:'<a id="menu_toggle"><i class="fa fa-bars"></i></a>',
+            link:function($scope,$element,$attrs){
+                $element.on('click',function(){
+                    var body=$document.find("body");
+                    
+                    if (body.hasClass('nav-md')) {
+                        body.removeClass('nav-md').addClass('nav-sm');
+                        body.find('.left_col').removeClass('scroll-view').removeAttr('style');
+                        body.find('.sidebar-footer').hide();
+
+                        if (body.find('#sidebar-menu li').hasClass('active')) {
+                            body.find('#sidebar-menu li.active').addClass('active-sm').removeClass('active');
+                        }
+                    } else {
+                        body.removeClass('nav-sm').addClass('nav-md');
+                        body.find('.sidebar-footer').show();
+
+                        if (body.find('#sidebar-menu li').hasClass('active-sm')) {
+                            body.find('#sidebar-menu li.active-sm').addClass('active').removeClass('active-sm');
+                        }
+                    }
+                })
+                
+                
+            }
+        }
     }]);
     
     weberp.directive('wTopbarDropdown',[function(){
@@ -180,11 +215,9 @@
         return{
           restrict:'A',
           replace:true, 
-          //template:'<li class="" uib-dropdown ng-transclude></li>'
           link:function($scope,$element,$attrs){
               $log.log($element);
               var elt=angular.element('<li class="divider"></li>');
-              //$element.parent().append(elt);
               $element.after(elt);
               
           }
@@ -216,6 +249,101 @@
           replace:true,
           transclude:true,
           template:'<li ng-transclude></li>'
+        };
+    }]);
+    
+    weberp.directive('wPanel',[function(){
+        return{
+            restrict:'E',
+            replace:true,
+            transclude:true,
+            template:'<div class="x_panel" ng-transclude></div>'
+        };
+    }])
+    
+    weberp.directive('wPanelHeader',['$compile',function($compile){
+        return{
+            restrict:'E',
+            replace:true,
+            transclude:true,
+            scope:{
+              title:'@',
+              smallTitle:'@'  
+            },
+            template:'<div class="x_title" ng-transclude></div>',
+            link:function($scope,$element,$attrs){
+                if(angular.isDefined($attrs.title)){
+                    $scope.title=$attrs.title;
+                    var elt=angular.element('<h2>{{title}}<small ng-if="smallTitle">{{smallTitle}}</small></h2>');
+                    var c=$compile(elt)($scope);
+                    $element.prepend(c);
+                }
+               $element.append('<div class="clearfix"></div>');
+            }
+        }
+    }]);
+    
+    weberp.directive('wPanelToolbox',[function(){
+        return{
+          restrict:'E',
+          replace:true,
+          transclude:true,
+          template:'<ul class="nav navbar-right panel_toolbox" ng-transclude></ul>'
+        };
+    }]);
+    
+     weberp.directive('wPanelToolboxChevron',[function(){
+        return{
+            restrict:'E',
+            replace:true,
+            template:'<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>',
+            link:function($scope,$element,$attrs){
+                $element.find('a').click(function () {
+                    var x_panel = $(this).closest('div.x_panel');
+                    var button = $(this).find('i');
+                    var content = x_panel.find('div.x_content');
+                    content.slideToggle(200);
+                    (x_panel.hasClass('fixed_height_390') ? x_panel.toggleClass('').toggleClass('fixed_height_390') : '');
+                    (x_panel.hasClass('fixed_height_320') ? x_panel.toggleClass('').toggleClass('fixed_height_320') : '');
+                    button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
+                    setTimeout(function () {
+                        x_panel.resize();
+                    }, 50);
+                });
+            }
+        };
+    }]);
+    
+    weberp.directive('wPanelToolboxClose',[function(){
+        return{
+            restrict:'E',
+            replace:true,
+            template:'<li><a class="close-link"><i class="fa fa-close"></i></a></li>',
+            link:function($scope,$element,$attrs){
+                $element.find('a').click(function () {
+                    var content = $(this).closest('div.x_panel');
+                    content.remove();
+                });
+            }
+        };
+    }]);
+    
+    weberp.directive('wPanelToolboxTool',['$compile',function($compile){
+        return{
+            restrict:'E',
+            replace:true,
+            transclude:true, 
+            template:'<li class="" uib-dropdown ><a uib-dropdown-toggle  ><i class="fa fa-wrench"></i></a><ul class="animated fadeInDown " uib-dropdown-menu ng-transclude></ul></li>',
+            
+        };
+    }]);
+    
+    weberp.directive('wPanelToolboxToolItem',[function(){
+        return{
+            restrict:'E',
+            replace:true,
+            transclude:true,
+            template:'<li ng-transclude></li>'
         };
     }]);
 })(window,angular,$);

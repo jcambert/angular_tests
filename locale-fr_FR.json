@@ -9,5 +9,8 @@
     "profile-tooltip":"Gerer votre compte",
     "settings-tooltip":"Gestion des parametres",
     "help-tooltip":"Acceder à l'aide",
-    "logout-tooltip":"Déconnexion du soft"
+    "logout-tooltip":"Déconnexion du soft",
+    "toggle-menu-tooltip":"Afficher/Cacher le menu",
+    "profile-management-tooltip":"Gerer votre compte",
+    "article-management-tooltip":"Gestion des articles"
 }

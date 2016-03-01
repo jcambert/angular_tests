@@ -20,7 +20,7 @@
     weberp.controller('main',['$scope',function($scope){
         $scope.appTitle="Web Erp";
         $scope.appIcon='pagelines';
-        $scope.user={photo:'',fullname:'Ambert Jean-Christophe'};
+        $scope.user={photo:'resources/photo.jpg',firstname:"Jean-Christophe",lastname:"Ambert", fullname:'Ambert Jean-Christophe'};
         $scope.menuSections=[{
                 title:'GENERAL',
                 menus:[
@@ -41,8 +41,9 @@
                         ]
                     },
                     {
-                        icon:'edit',
-                        text:'Forms',
+                        icon:'building-o',
+                        text:'Article',
+                        tooltip:'article-management',
                         childs:[
                             {
                                 id:0,
