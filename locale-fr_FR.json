@@ -12,5 +12,8 @@
     "logout-tooltip":"Déconnexion du soft",
     "toggle-menu-tooltip":"Afficher/Cacher le menu",
     "profile-management-tooltip":"Gerer votre compte",
-    "article-management-tooltip":"Gestion des articles"
+    "article-management-tooltip":"Gestion des articles",
+    "tous":"Tous",
+    "creer":"Nouveau",
+    "temp":"Temporaire"
 }

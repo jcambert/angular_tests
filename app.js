@@ -8,8 +8,19 @@
             'fr_FR': 'Francais'
         },
     'preferredLocale': 'fr_FR'
-    })
+    });
+    
+    weberp.constant('Partials',(function(){
+       var partial_dir='partials/';
+       
+       return{
+           BASE_DIR:partial_dir,
+           ARTICLE_LIST_MASTER:partial_dir+'article.list.master.html'
+           
+       }
+    })());
 
+    
     weberp.config(['$stateProvider','$urlRouterProvider','$translateProvider','$logProvider',function($stateProvider, $urlRouterProvider,$translateProvider,$log) {
         $log.debugEnabled(true);
         
@@ -120,14 +131,12 @@
             require: '^wMenuItem',
 
             link:function ($scope,$element,$attrs) {
-                var elt=angular.element('<a uib-tooltip="{{child.tooltip| translate}}" tooltip-placement="right">{{child.text}}<span ng-if="child.label" class="label label-{{child.label.variation}} pull-right">{{child.label.text}}</span></a>');
+                var elt=angular.element('<a uib-tooltip="{{child.tooltip| translate}}" tooltip-placement="right">{{child.text | translate}}<span ng-if="child.label" class="label label-{{child.label.variation}} pull-right">{{child.label.text}}</span></a>');
                 if (angular.isDefined($scope.child.state) && $scope.child.state !== "")
                     elt.attr('ui-sref',$scope.child.state);
                 if (angular.isDefined($scope.child.link) && $scope.child.link !== "")
                     elt.attr('ng-href', $scope.child.link);
-                if (angular.isDefined($scope.child.label)){
-                    var label=angular.element('')
-                }
+               
                 
                 var c=$compile(elt)($scope);
                 
@@ -355,4 +364,13 @@
             template:'<li ng-transclude></li>'
         };
     }]);
+    
+    weberp.directive('wPanelContent',[function(){
+        return{
+          restrict:'E',
+          replace:true,
+          transclude:true,
+          template:'<div class="x_content" ng-transclude></div>'  
+        };
+    }])
 })(window,angular,$);

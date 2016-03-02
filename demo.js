@@ -1,7 +1,8 @@
 (function (window,angular) {
     'use strict';
     var weberp = window.weberp;
-    weberp.config(function($stateProvider, $urlRouterProvider) {
+    weberp.config(['$stateProvider', '$urlRouterProvider','Partials',function($stateProvider, $urlRouterProvider,$partials) {
+       
         $urlRouterProvider.otherwise("/home");
          $stateProvider
         .state('state1', {
@@ -12,9 +13,32 @@
              url:'/home',
              template:'<div>home</div>'
              
-         });
-        
-    });
+         })
+         .state('article',{
+             abstract:true,
+             url:'/article',
+             views:{
+                 '':{
+                     template:'<div class="row"><div class="col-md-12" ui-view="master"></div><div class="col-md-12" ui-view="detail"></div></div>',
+                 }
+             }
+         })
+         .state('article.list',{
+             url:'',
+             
+             views:{
+                 master:{
+                     templateUrl:$partials.ARTICLE_LIST_MASTER,
+                     controller:'ArticleListMasterController'
+                 },
+                 detail:{
+                     template:'<div>DETAIL</div>'
+                 }
+             }
+         })
+         ;
+        console.dir($partials);
+    }]);
     
     
     weberp.controller('main',['$scope',function($scope){
@@ -30,12 +54,12 @@
                         childs:[
                             {
                                 id:0,
-                                text:'accueil 1',
+                                text:'temp',
                                 state:'state1'
                             },
                             {
                                 id:1,
-                                text:'accueil 2',
+                                text:'temp',
                                 link:'state2'
                             },
                         ]
@@ -47,14 +71,14 @@
                         childs:[
                             {
                                 id:0,
-                                text:'accueil 3',
-                                state:'state1',
+                                text:'tous',
+                                state:'article.list',
                                //tooltip:'Tous les articles'
                                 
                             },
                             {
                                 id:1,
-                                text:'accueil 4',
+                                text:'creer',
                                 link:'state4'
                             },
                         ]
@@ -67,14 +91,14 @@
                         icon:'bug',
                         text:'Additional Pages',
                         childs:[{
-                            text:'E-commerce',
+                            text:'temp',
                             label:{
                                 variation:'success',
                                 text:10
                             }
                             
                         },{
-                            text:'Projects'
+                            text:'temp'
                         }
                         ]
                     }
@@ -102,6 +126,10 @@
                 text:'Forms'
             }
         ];*/
+    }]);
+    
+    weberp.controller('ArticleListMasterController',['$scope',function($scope){
+        
     }])
     
   

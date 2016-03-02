@@ -4,6 +4,7 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles/ng-table.min.css">
     <link rel="stylesheet" href="custom.css">
 </head>
 <body class="nav-md pace-done" ng-app="weberp" ng-cloak>
@@ -78,8 +79,8 @@
             <!-- /top navigation -->
             
             <!-- page content -->
-            <div class="right_col" role="main">
-                <div class="row">
+            <div class="right_col" role="main" ui-view>
+               <!-- <div class="row">
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         <w-panel>
                             <w-panel-header title="Test" small-title="sessions">
@@ -102,7 +103,7 @@
                             <div class="x_content">TOTO</div>
                         </w-panel>
                     </div>
-                </div>
+                </div>-->
             </div>
             <!-- /page content -->
        </div>
@@ -120,6 +121,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-dynamic-locale/0.1.30/tmhDynamicLocale.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.1/ui-bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.1/ui-bootstrap-tpls.min.js"></script>
+        <!-- DATATABLE -->
+        <script src="scripts/ng-table.min.js"></script>
+       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.5/js/TableTools.min.js"></script>
+        --><!-- DATATABLE -->
         <script src="app.js"></script>
         <script src="demo.js"></script>
         <script>
