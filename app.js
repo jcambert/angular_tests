@@ -1,7 +1,7 @@
 (function (window,angular,$) {
     'use strict';
-    var weberp = window.weberp = angular.module('weberp', ['ui.bootstrap','ngCookies','ngAnimate','ui.router','pascalprecht.translate','tmh.dynamicLocale']);
-    
+    var weberp = window.weberp = angular.module('weberp', ['weberp.services','ui.bootstrap','ngCookies','ngAnimate','ui.router','pascalprecht.translate','tmh.dynamicLocale','ngTable']);
+    var services=window.services=angular.module('weberp.services',['ngResource'])
     weberp.constant('LOCALES', {
         'locales': {
            // 'ru_RU': 'Русский',
@@ -20,6 +20,15 @@
        }
     })());
 
+    weberp.constant('EndPoints',(function(){
+       var partial_dir='http://localhost:51101/api/';
+       
+       return{
+           BASE_DIR:partial_dir,
+           ARTICLE:partial_dir+'article'
+           
+       }
+    })());
     
     weberp.config(['$stateProvider','$urlRouterProvider','$translateProvider','$logProvider',function($stateProvider, $urlRouterProvider,$translateProvider,$log) {
         $log.debugEnabled(true);

@@ -1,6 +1,7 @@
 (function (window,angular) {
     'use strict';
     var weberp = window.weberp;
+    var services = window.services;
     weberp.config(['$stateProvider', '$urlRouterProvider','Partials',function($stateProvider, $urlRouterProvider,$partials) {
        
         $urlRouterProvider.otherwise("/home");
@@ -37,7 +38,6 @@
              }
          })
          ;
-        console.dir($partials);
     }]);
     
     
@@ -128,9 +128,22 @@
         ];*/
     }]);
     
-    weberp.controller('ArticleListMasterController',['$scope',function($scope){
-        
-    }])
+    weberp.controller('ArticleListMasterController',['$log','$scope','Article','NgTableParams',function($log,$scope,Article,NgTableParams){
+        $scope.articles= new NgTableParams({}, {
+            getData: function(params) {
+                // ajax request to api
+                return Article.query();
+            }
+        });
+    }]);
+    
+    services.service('Article',['$resource','EndPoints',function($resource,$end){
+        return $resource($end.ARTICLE+'/:id',{id:'@_id'},{
+            update:{
+                method:'PUT'
+            }
+        });
+    }]);
     
   
 })(window,angular);
