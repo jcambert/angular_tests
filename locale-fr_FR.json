@@ -13,7 +13,9 @@
     "toggle-menu-tooltip":"Afficher/Cacher le menu",
     "profile-management-tooltip":"Gerer votre compte",
     "article-management-tooltip":"Gestion des articles",
+    "code_article":"Code Article",
     "tous":"Tous",
     "creer":"Nouveau",
-    "temp":"Temporaire"
+    "temp":"Temporaire",
+    "x":"x"
 }

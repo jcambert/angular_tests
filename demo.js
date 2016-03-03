@@ -29,7 +29,7 @@
              
              views:{
                  master:{
-                     templateUrl:$partials.ARTICLE_LIST_MASTER,
+                     templateUrl:$partials.ARTICLE_DETAIL,
                      controller:'ArticleListMasterController'
                  },
                  detail:{
@@ -129,18 +129,46 @@
     }]);
     
     weberp.controller('ArticleListMasterController',['$log','$scope','Article','NgTableParams',function($log,$scope,Article,NgTableParams){
-        $scope.articles= new NgTableParams({}, {
+       /* $scope.articles= new NgTableParams({}, {
             getData: function(params) {
                 // ajax request to api
                 return Article.query();
             }
-        });
+        });*/
+        $scope.current=Article.first();
+        $scope.index=0;
+        $scope.next = function(){
+            
+            $scope.current=Article.next({index:$scope.index+1}).$promise.then(
+                function(result){
+                    $log.log(result);
+                }
+            );
+        }
     }]);
     
     services.service('Article',['$resource','EndPoints',function($resource,$end){
-        return $resource($end.ARTICLE+'/:id',{id:'@_id'},{
+        return $resource($end.ARTICLE+'/:action/:id/:index',{id:'@_id',index:'@_index'},{
             update:{
                 method:'PUT'
+            },
+            first:{
+                method:'GET',
+                params:{
+                    action:'First'
+                }
+            },
+            next:{
+                method:'GET',
+                params:{
+                    action:'Next',
+                }
+            },
+            previous:{
+                method:'GET',
+                params:{
+                    action:'Previous'
+                }
             }
         });
     }]);

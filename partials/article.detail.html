@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <w-panel>
+            <w-panel-header title="{{'article-management-tooltip' |translate}}">
+                <w-panel-toolbox>
+                    <w-panel-toolbox-chevron>
+                    </w-panel-toolbox-chevron>
+                    <w-panel-toolbox-tool>
+                        <w-panel-toolbox-tool-item divider>
+                            <a href="#">Settings 1</a>
+                        </w-panel-toolbox-tool-item>
+                        <w-panel-toolbox-tool-item>
+                            <a href="#">Settings 2</a>
+                        </w-panel-toolbox-tool-item>
+                    </w-panel-toolbox-tool>
+                    <w-panel-toolbox-close>
+                    </w-panel-toolbox-close>
+                    
+                </w-panel-toolbox>
+            </w-panel-header>
+            <w-panel-content>
+                
+                <form class="form-horizontal form-label-left input_mask">
+       
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-left" id="code" placeholder="Code Article"  ng-model="current.Code">
+                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-left" id="libelle" placeholder="Libelle" ng-model="current.Libelle">
+                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                        <uib-tabset active="active">
+                            <uib-tab index="0" heading="General">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                    
+                                </div>
+                            </uib-tab>
+                            <uib-tab index="1" heading="Stock">
+                                
+                            </uib-tab>
+                            <uib-tab index="2" >
+                                <uib-tab-heading>
+                                    <i class="fa fa-euro"></i> Cout
+                                </uib-tab-heading>
+                                COUT
+                            </uib-tab>
+                        </uib-tabset>
+                    </div>               
+                    
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                            <button class="btn btn-primary">Cancel</button>
+                            <button class="btn btn-success" ng-click="next()">Next</button>
+                        </div>
+                    </div>
+
+                </form>
+        
+            </w-panel-content>
+        </w-panel>
+    </div>
+</div>

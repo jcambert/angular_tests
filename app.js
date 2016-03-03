@@ -15,7 +15,8 @@
        
        return{
            BASE_DIR:partial_dir,
-           ARTICLE_LIST_MASTER:partial_dir+'article.list.master.html'
+           ARTICLE_LIST:partial_dir+'article.list.html',
+           ARTICLE_DETAIL:partial_dir+'article.detail.html'
            
        }
     })());
