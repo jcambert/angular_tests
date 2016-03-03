@@ -55,12 +55,12 @@
                             {
                                 id:0,
                                 text:'temp',
-                                state:'state1'
+                                state:'home'
                             },
                             {
                                 id:1,
                                 text:'temp',
-                                link:'state2'
+                                link:'home'
                             },
                         ]
                     },
@@ -135,20 +135,57 @@
                 return Article.query();
             }
         });*/
-        $scope.current=Article.first();
-        $scope.index=0;
-        $scope.next = function(){
-            
-            $scope.current=Article.next({index:$scope.index+1}).$promise.then(
+        //$scope.current=Article.first();
+        $scope.index = 0;
+        $scope.count = 0;
+        
+        
+        $scope.first = function(){
+            Article.first().$promise.then(
                 function(result){
                     $log.log(result);
+                    $scope.current=result.Result;
+                    $scope.index=result.Index;
+                    $scope.count = result.Count;
                 }
             );
         }
+        
+         $scope.last = function(){
+            Article.last().$promise.then(
+                function(result){
+                    $log.log(result);
+                    $scope.current=result.Result;
+                    $scope.index=result.Index;
+                    $scope.count = result.Count;
+                }
+            );
+        }
+        
+        $scope.next = function(){
+            Article.next({index:$scope.index}).$promise.then(
+                function(result){
+                    $log.log(result);
+                    $scope.current=result.Result;
+                    $scope.index=result.Index;
+                    $scope.count = result.Count;
+                }
+            );
+        };
+        $scope.previous = function(){
+            Article.previous({index:$scope.index}).$promise.then(function(result){
+                $log.log(result);
+                $scope.current = result.Result;
+                $scope.index = result.Index;
+                $scope.count = result.Count;
+            })
+        };
+        
+        $scope.first();
     }]);
     
     services.service('Article',['$resource','EndPoints',function($resource,$end){
-        return $resource($end.ARTICLE+'/:action/:id/:index',{id:'@_id',index:'@_index'},{
+        return $resource($end.ARTICLE+'/:action/:id/',{id:'@_id'},{
             update:{
                 method:'PUT'
             },
@@ -156,6 +193,12 @@
                 method:'GET',
                 params:{
                     action:'First'
+                }
+            },
+            last:{
+                method:'GET',
+                params:{
+                    action:'Last'
                 }
             },
             next:{
@@ -167,9 +210,9 @@
             previous:{
                 method:'GET',
                 params:{
-                    action:'Previous'
+                    action:'Previous',
                 }
-            }
+            },
         });
     }]);
     
