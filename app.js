@@ -382,5 +382,40 @@
           transclude:true,
           template:'<div class="x_content" ng-transclude></div>'  
         };
-    }])
+    }]);
+    
+    weberp.directive('wNavigationBar',[function(){
+        return {
+            restrict:'E',
+            replace:true,
+            transclude:true,
+            templateUrl:'partials/wNavigationBar.html'
+        }    
+    }]);
+    
+    weberp.directive('wNavigationButton',[function(){
+        return{
+          restrict:'E',
+          replace:true,
+          template:'<button class="btn btn-default " type="button"  aria-haspopup="true" aria-expanded="false"> <i class="fa "></i></button>' ,
+          link:function($scope,$element,$attrs){
+              if(angular.isDefined($attrs.icon))
+                $element.find('i').addClass('fa-'+$attrs.icon);
+          }
+        };
+    }]);
+    
+  /*  weberp.directive('wSpinner',[function(){
+        return{
+            restrict:'E',
+            replace:true,
+            scope:{
+                index:'=',
+            },
+            templateUrl:'partials/wspinner.html',
+            link:function($scope,$element,$attrs){
+                
+            }
+        }
+    }])*/
 })(window,angular,$);

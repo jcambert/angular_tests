@@ -223,6 +223,11 @@ body.nav-md .container.body .right_col {
     height: 57px;
 }
 
+
+/*.fa:hover { background-color: #2A3F54 ;color:#fff;}
+.fa:hover > .fa-square-o { color: #3b5998; }
+*/
+
 @media (max-width: 991px) {
     body.nav-md .container.body .right_col,
     body.nav-md .container.body .top_nav {

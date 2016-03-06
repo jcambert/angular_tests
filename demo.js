@@ -136,16 +136,24 @@
             }
         });*/
         //$scope.current=Article.first();
-        $scope.index = 0;
+        var self=$scope;
+        self.index = 0;
         $scope.count = 0;
         
+        $scope.get = function(index){
+            Article.get({index:index}).$promise.then(function(result){
+                $scope.current=result.Result;
+                $scope.count = result.Count;
+                $scope.index=result.Index;
+            })
+        }
         
         $scope.first = function(){
             Article.first().$promise.then(
                 function(result){
                     $log.log(result);
                     $scope.current=result.Result;
-                    $scope.index=result.Index;
+                    self.index=parseInt(result.Index);
                     $scope.count = result.Count;
                 }
             );
@@ -167,8 +175,9 @@
                 function(result){
                     $log.log(result);
                     $scope.current=result.Result;
-                    $scope.index=result.Index;
+                    self.index=parseInt(result.Index);
                     $scope.count = result.Count;
+                   $log.log(self.index);
                 }
             );
         };
@@ -180,8 +189,12 @@
                 $scope.count = result.Count;
             })
         };
-        
+        $scope.$watch(self.index,function(){
+            $log.log('index change:'+self.index);
+        })
         $scope.first();
+        
+        
     }]);
     
     services.service('Article',['$resource','EndPoints',function($resource,$end){
@@ -213,6 +226,10 @@
                     action:'Previous',
                 }
             },
+            get:{
+                method:'GET',
+                
+            }
         });
     }]);
     
