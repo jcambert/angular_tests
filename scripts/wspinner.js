@@ -1,7 +1,7 @@
 window.weberp.directive('ngTouchSpin', ['$log','$compile','$timeout', '$interval', function($log,$compile,$timeout, $interval) {
 	'use strict';
 
-	var setScopeValues = function (scope, attrs) {
+	var setScopeValues = function (scope, attrs,ngModel) {
 		scope.min = attrs.min || 0;
 		scope.max = attrs.max || 100;
 		scope.step = attrs.step || 1;
@@ -10,21 +10,28 @@ window.weberp.directive('ngTouchSpin', ['$log','$compile','$timeout', '$interval
 		scope.decimals = attrs.decimals || 0;
 		scope.stepInterval = attrs.stepInterval || 100;
 		scope.stepIntervalDelay = attrs.stepIntervalDelay || 500;
-		scope.initval = attrs.initval || '';
-		scope.val = attrs.value || scope.initval;
+		//scope.initval = attrs.initval || '';
+		scope.val = ngModel.$viewValue  ;
 	};
 
 	return {
 		restrict: 'EA',
 		require: '?ngModel',
+		scope: {
+            ngModel:'='
+        },
 		replace: true,
-        scope:false,
-		link: function (scope, element, attrs, ngModel,ctrl) {
-			setScopeValues(scope, attrs);
+		link: function (scope, element, attrs, ngModel) {
+			setScopeValues(scope, attrs,ngModel);
+
 			var timeout, timer, helper = true, oldval = scope.val, clickStart;
 
-			ngModel.$setViewValue(scope.val);
-            $log.log(ngModel.value)
+			//ngModel.$setViewValue(scope.val);
+            ngModel.$render = function () {
+                var newValue = ngModel.$viewValue;
+                scope.val=newValue;
+                console.log(newValue)
+            };
 			scope.decrement = function () {
 				oldval = scope.val;
 				var value = parseFloat(parseFloat(Number(scope.val)) - parseFloat(scope.step)).toFixed(scope.decimals);
@@ -39,10 +46,7 @@ window.weberp.directive('ngTouchSpin', ['$log','$compile','$timeout', '$interval
 				scope.val = value;
 				ngModel.$setViewValue(value);
 			};
-            scope.update= function(){
-                $log.log('update');
-                ngModel.$setViewValue(scope.val);
-            }
+
 			scope.increment = function () {
 				oldval = scope.val;
 				var value = parseFloat(parseFloat(Number(scope.val)) + parseFloat(scope.step)).toFixed(scope.decimals);
@@ -101,11 +105,22 @@ window.weberp.directive('ngTouchSpin', ['$log','$compile','$timeout', '$interval
 					ngModel.$setViewValue(val);
 				}
 			};
-            scope.$watch(attrs.ngModel, function (newval) {
-                    $log.log('index change to:'+newval);
-                    //ngModel.$render();
-                    //scope.index=newval;
-                }, true);
+            
+            element.find('input').bind("keydown keypress", function (event) {
+                if(event.which === 13) {
+                    scope.$apply(function (){
+                        
+                    });
+    
+                    event.preventDefault();
+                }
+            });
+            
+            scope.$watch(function () {
+                    return ngModel.$modelValue;
+                }, function(newValue) {
+                    console.log(newValue);
+                });
 		},
 		template: 
 		'<div class="input-group">' +
@@ -113,7 +128,7 @@ window.weberp.directive('ngTouchSpin', ['$log','$compile','$timeout', '$interval
 		'    <button class="btn btn-default" ng-mousedown="startSpinDown()" ng-mouseup="stopSpin()"><i class="fa fa-minus"></i></button>' +
 		'  </span>' +
 		'  <span class="input-group-addon" ng-show="prefix" ng-bind="prefix"></span>' +
-		'  <input type="text" ng-model="val" class="form-control" ng-blur="checkValue()">' +
+		'  <input type="text" ng-model="ngModel" class="form-control" ng-blur="checkValue()">' +
 		'  <span class="input-group-addon" ng-show="postfix" ng-bind="postfix"></span>' +
 		'  <span class="input-group-btn" ng-show="!verticalButtons">' +
 		'    <button class="btn btn-default" ng-mousedown="startSpinUp()" ng-mouseup="stopSpin()"><i class="fa fa-plus"></i></button>' +
@@ -127,6 +142,34 @@ window.weberp.directive('ngTouchSpin', ['$log','$compile','$timeout', '$interval
 (function (window,angular) {
     'use strict';
     var weberp = window.weberp;
+    
+    weberp.directive('wToto',['$log',function($log){
+        return{
+            restrict:'A',
+            //replace:true,
+            require:'?ngModel',
+            //template:'<div><input type="text"> </input></div>',
+           scope:{
+              ngModel:'=',
+              callback:'&'  
+            },
+            link:function($scope,$element,$attrs,ngModel){
+                 $element.on('click', function() {
+                    var counter = ngModel.$viewValue ? ngModel.$viewValue : 0;
+                    ngModel.$setViewValue(++counter);
+                    $scope.$apply();
+                    $scope.callback({index:counter});
+                });
+                
+               $scope.$watch(function () {
+                    return ngModel.$modelValue;
+                }, function(newValue) {
+                    console.log(newValue);
+                });
+            }    
+        };
+    }]);
+    
 weberp.directive('ngEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {

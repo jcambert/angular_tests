@@ -141,6 +141,8 @@
         $scope.count = 0;
         
         $scope.get = function(index){
+            $log.log(index);
+            $log.log('Article get index:'+index);
             Article.get({index:index}).$promise.then(function(result){
                 $scope.current=result.Result;
                 $scope.count = result.Count;
@@ -191,6 +193,7 @@
         };
         $scope.$watch(self.index,function(){
             $log.log('index change:'+self.index);
+            $scope.get(self.index);
         })
         $scope.first();
         

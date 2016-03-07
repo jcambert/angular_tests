@@ -58,7 +58,9 @@
                     </div>
                     <div class="col-md-2 col-sm-12 col-xs-12 pull-left">
                         <!--w-spinner ng-model="index" nd-disabled="count==0"></w-spinner>-->
-                        <input type="text" initval="{{index}}" ng-model="index" ng-touch-spin ng-enter="update()">
+                        <!--<input type="text" ng-model="index" ng-touch-spin on-enter="get(index)">-->
+                        <!--<w-toto ng-model="index" ></w-toto>-->
+                        <button w-toto ng-model="index" callback="get(index)">CLICK ME</button>
                     </div>
                        
                     <div class="col-md-2 col-sm-12 col-xs-12 pull-left">
