@@ -10,6 +10,8 @@
     'preferredLocale': 'fr_FR'
     });
     
+
+    
     weberp.constant('Partials',(function(){
        var partial_dir='partials/';
        
