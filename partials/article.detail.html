@@ -1,6 +1,33 @@
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <w-panel>
+            <w-panel-header title="Rechercher">
+                <w-panel-toolbox>
+                    <w-panel-toolbox-chevron>
+                    </w-panel-toolbox-chevron>
+                    <w-panel-toolbox-tool>
+                        <w-panel-toolbox-tool-item divider>
+                            <a href="#">Settings 1</a>
+                        </w-panel-toolbox-tool-item>
+                        <w-panel-toolbox-tool-item>
+                            <a href="#">Settings 2</a>
+                        </w-panel-toolbox-tool-item>
+                    </w-panel-toolbox-tool>
+                    <w-panel-toolbox-close>
+                    </w-panel-toolbox-close>
+                    
+                </w-panel-toolbox>
+            </w-panel-header>
+            <w-panel-content>
+                <w-search-box class="col-md-12 col-sm-6 col-xs-12 " fields="searchFields">
+                </w-search-box>
+                
+        
+            </w-panel-content>
+        </w-panel>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <w-panel>
             <w-panel-header title="{{'article-management-tooltip' |translate}}">
                 <w-panel-toolbox>
                     <w-panel-toolbox-chevron>
@@ -19,7 +46,6 @@
                 </w-panel-toolbox>
             </w-panel-header>
             <w-panel-content>
-                
                 <form class="form-horizontal form-label-left input_mask">
        
                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">

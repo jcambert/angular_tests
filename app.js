@@ -1,4 +1,4 @@
-(function (window,angular,$) {
+(function (window,angular,$,_) {
     'use strict';
     var weberp = window.weberp = angular.module('weberp', ['weberp.services','ui.bootstrap','ngCookies','ngAnimate','ui.router','pascalprecht.translate','tmh.dynamicLocale','ngTable']);
     var services=window.services=angular.module('weberp.services',['ngResource'])
@@ -407,6 +407,40 @@
         };
     }]);
     
+    weberp.directive('wSearchBox',[function(){
+        return{
+            restrict:'E',
+            replace:true,
+            require:'?ngModel',
+            scope:{
+                model: '=ngModel',
+                fields:'=',
+                //operators:'=operators'
+            },
+            templateUrl: function(element, attr) {
+                return attr.templateUrl || 'partials/angular-advanced-searchbox.html';
+            },
+            controller:['$log','$scope',function($log,$scope){
+                $log.log($scope.fields);
+                $scope.lines=[];
+               $scope.operators =  [{
+                  label:'Commence par'  
+                },{
+                   label:'Different de' 
+                }
+                ]
+                $scope.add = function(){
+                  var line={field:'code',operator:'=',value:'Code'};
+                  $scope.lines.push(line);
+                    
+                };
+                $scope.remove = function(index){
+                    $scope.lines.splice(index, 1);
+                };
+            }]
+        }
+    }]);
+    
   /*  weberp.directive('wSpinner',[function(){
         return{
             restrict:'E',
@@ -420,4 +454,4 @@
             }
         }
     }])*/
-})(window,angular,$);
+})(window,angular,$,_);

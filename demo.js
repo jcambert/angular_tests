@@ -30,7 +30,7 @@
              views:{
                  master:{
                      templateUrl:$partials.ARTICLE_DETAIL,
-                     controller:'ArticleListMasterController'
+                     controller:'ArticleDetailController'
                  },
                  detail:{
                      template:'<div>DETAIL</div>'
@@ -128,17 +128,24 @@
         ];*/
     }]);
     
-    weberp.controller('ArticleListMasterController',['$log','$scope','Article','NgTableParams',function($log,$scope,Article,NgTableParams){
-       /* $scope.articles= new NgTableParams({}, {
-            getData: function(params) {
-                // ajax request to api
-                return Article.query();
-            }
-        });*/
-        //$scope.current=Article.first();
+    weberp.controller('ArticleDetailController',['$log','$scope','Article','NgTableParams',function($log,$scope,Article,NgTableParams){
+
         var self=$scope;
         self.index = 0;
         $scope.count = 0;
+        
+        $scope.searchFields =[
+          {label:'Code',value:'code',type:'alpha'},
+          {label:'Libelle',value:'libelle',type:'alpha'},
+          {label:'Type',value:'type',type:'choice',choices:[{label:'Produit Fini',value:'PF'},{label:'Produit semi-fini',value:'SF'}]}
+            
+        ];
+        
+        $scope.update = function(){
+            Article.update().$promise.then(function(result){
+                $log.log(result);
+            })
+        }
         
         $scope.get = function(index){
             $log.log(index);
