@@ -423,24 +423,90 @@
             controller:['$log','$scope',function($log,$scope){
                 $log.log($scope.fields);
                 $scope.lines=[];
-               $scope.operators =  [{
-                  label:'Commence par'  
+               $scope.operators =  [
+                {
+                  label:'Egal',
+                  value:'eq'  
+                },
+                {
+                  label:'Commence par',
+                  value:'sw'
                 },{
-                   label:'Different de' 
+                   label:'Different de',
+                   value:'neq'
+                },{
+                    label:'Superieur',
+                    value:'gt'
+                },{
+                    label:'Superieur ou egal',
+                    value:'gte'
+                },{
+                    label:'Inferieur',
+                    value:'lt'
+                },{
+                    label:'Inferieur ou egal',
+                    value:'lte'
                 }
-                ]
+                
+                ];
+                
+                $scope.opened=false;
+                $scope.dt=new Date();
                 $scope.add = function(){
-                  var line={field:'code',operator:'=',value:'Code'};
+                  var line={opened:true,value:new Date()};
                   $scope.lines.push(line);
                     
                 };
                 $scope.remove = function(index){
                     $scope.lines.splice(index, 1);
                 };
+                $scope.openDatePicker = function(index){
+                    $scope.lines[index].opened=true;
+                    $log.log($scope.lines);
+                    $scope.opened=true;
+                };
+                 $scope.dateOptions = {
+                    dateDisabled: disabled,
+                    formatYear: 'yy',
+                    maxDate: new Date(2020, 5, 22),
+                    minDate: new Date(),
+                    startingDay: 1
+                };
+                 $scope.birthDate = new Date();
+        
+                // Disable weekend selection
+                function disabled(data) {
+                    var date = data.date,
+                    mode = data.mode;
+                    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+                }
+                
+                
             }]
         }
     }]);
     
+    weberp.directive('customDatepicker',function($compile,$timeout){
+        return {
+            replace:true,
+            templateUrl:'partials/custom-datepicker.html',
+            scope: {
+                ngModel: '=',
+                dateOptions: '@',
+                dateDisabled: '@',
+                opened: '=',
+                min: '@',
+                max: '@',
+                popup: '@',
+                options: '@',
+                name: '@',
+                id: '@'
+            },
+            link: function($scope, $element, $attrs, $controller){
+
+            }    
+        };
+    })
   /*  weberp.directive('wSpinner',[function(){
         return{
             restrict:'E',

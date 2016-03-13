@@ -1,60 +1,55 @@
 window.weberp.directive('ngTouchSpin', ['$log','$compile','$timeout', '$interval', function($log,$compile,$timeout, $interval) {
 	'use strict';
 
-	var setScopeValues = function (scope, attrs,ngModel) {
+	var setScopeValues = function (scope, attrs) {
 		scope.min = attrs.min || 0;
 		scope.max = attrs.max || 100;
-		scope.step = attrs.step || 1;
+		scope.step = Number(attrs.step) || 1;
 		scope.prefix = attrs.prefix || undefined;
 		scope.postfix = attrs.postfix || undefined;
 		scope.decimals = attrs.decimals || 0;
 		scope.stepInterval = attrs.stepInterval || 100;
 		scope.stepIntervalDelay = attrs.stepIntervalDelay || 500;
 		//scope.initval = attrs.initval || '';
-		scope.val = ngModel.$viewValue  ;
+		scope.model=Number(scope.model);
 	};
 
 	return {
 		restrict: 'EA',
-		require: '?ngModel',
+		//require: '?ngModel',
 		scope: {
-            ngModel:'='
+            model:'=',
+            callback:'&'
         },
 		replace: true,
-		link: function (scope, element, attrs, ngModel) {
-			setScopeValues(scope, attrs,ngModel);
+		link: function (scope, element, attrs) {
+			setScopeValues(scope, attrs);
 
-			var timeout, timer, helper = true, oldval = scope.val, clickStart;
+			var timeout, timer, helper = true, oldval = scope.model, clickStart;
 
-			//ngModel.$setViewValue(scope.val);
-            ngModel.$render = function () {
-                var newValue = ngModel.$viewValue;
-                scope.val=newValue;
-                console.log(newValue)
-            };
+			
 			scope.decrement = function () {
-				oldval = scope.val;
-				var value = parseFloat(parseFloat(Number(scope.val)) - parseFloat(scope.step)).toFixed(scope.decimals);
+				/*oldval = scope.model;
+				var value = parseFloat(parseFloat(Number(scope.model)) - parseFloat(scope.step)).toFixed(scope.decimals);
 
 				if (value < scope.min) {
 					value = parseFloat(scope.min).toFixed(scope.decimals);
-					scope.val = value;
-					ngModel.$setViewValue(value);
+					scope.model=value;
 					return;
 				}
 
-				scope.val = value;
-				ngModel.$setViewValue(value);
+				scope.model = value;*/
+                scope.model-=scope.step;
 			};
 
 			scope.increment = function () {
-				oldval = scope.val;
-				var value = parseFloat(parseFloat(Number(scope.val)) + parseFloat(scope.step)).toFixed(scope.decimals);
+				/*oldval = scope.val;
+				var value = parseFloat(parseFloat(Number(scope.model)) + parseFloat(scope.step)).toFixed(scope.decimals);
 
 				if (value > scope.max) return;
 
-				scope.val = value;
-				ngModel.$setViewValue(value);
+				scope.model = value;*/
+                scope.model+=scope.step;
 			};
 
 			scope.startSpinUp = function () {
@@ -97,13 +92,12 @@ window.weberp.directive('ngTouchSpin', ['$log','$compile','$timeout', '$interval
 			};
 
 			scope.checkValue = function () {
-				var val;
-
-				if (scope.val !== '' && !scope.val.match(/^-?(?:\d+|\d*\.\d+)$/i)) {
+				/*var val;
+                $log.log(scope.model);
+				if (scope.model !== '' && !scope.model.match(/^-?(?:\d+|\d*\.\d+)$/i)) {
 					val = oldval !== '' ? parseFloat(oldval).toFixed(scope.decimals) : parseFloat(scope.min).toFixed(scope.decimals);
-					scope.val = val;
-					ngModel.$setViewValue(val);
-				}
+					scope.model = val;
+				}*/
 			};
             
             element.find('input').bind("keydown keypress", function (event) {
@@ -116,10 +110,9 @@ window.weberp.directive('ngTouchSpin', ['$log','$compile','$timeout', '$interval
                 }
             });
             
-            scope.$watch(function () {
-                    return ngModel.$modelValue;
-                }, function(newValue) {
-                    console.log(newValue);
+            scope.$watch('model',function () {
+                    $log.log('Model in wSpinner has changed');
+                    scope.callback({index:scope.model});
                 });
 		},
 		template: 
@@ -128,7 +121,7 @@ window.weberp.directive('ngTouchSpin', ['$log','$compile','$timeout', '$interval
 		'    <button class="btn btn-default" ng-mousedown="startSpinDown()" ng-mouseup="stopSpin()"><i class="fa fa-minus"></i></button>' +
 		'  </span>' +
 		'  <span class="input-group-addon" ng-show="prefix" ng-bind="prefix"></span>' +
-		'  <input type="text" ng-model="ngModel" class="form-control" ng-blur="checkValue()">' +
+		'  <input type="text" ng-model="model" class="form-control" ng-blur="checkValue()">' +
 		'  <span class="input-group-addon" ng-show="postfix" ng-bind="postfix"></span>' +
 		'  <span class="input-group-btn" ng-show="!verticalButtons">' +
 		'    <button class="btn btn-default" ng-mousedown="startSpinUp()" ng-mouseup="stopSpin()"><i class="fa fa-plus"></i></button>' +

@@ -1,10 +1,26 @@
 <div>
     <div class="btn-toolbar" role="toolbar" aria-label="...">
          <div class="btn-group" role="group" aria-label="...">
-             <a role="button"><i class="btn fa fa-save fa-2x"></i></a>
-             <a role="button" ng-click="add()"><i class="btn fa fa-plus fa-2x"></i></a>
+             <a role="button" uib-tooltip="Filtrer" tooltip-placement="top" ng-click="filter()"><i class="btn fa fa-search fa-2x"></i></a>
+             <a role="button" uib-tooltip="Ajouter un champs" tooltip-placement="top"  ng-click="add()"><i class="btn fa fa-plus fa-2x"></i></a>
+             <a role="button" uib-tooltip="Nouvelle recherche" tooltip-placement="top"  ng-click="clear()"><i class="btn fa fa-refresh fa-2x"></i></a>
+             <a role="button" uib-tooltip="Sauver le filtre" tooltip-placement="top"  ng-click="save()"><i class="btn fa fa-save fa-2x"></i></a>
+             <a role="button" uib-tootlip="Utiliser un filtre existant" tooltip-placement="top"  ng-click="load()"><i class="btn fa fa-folder-open fa-2x"></i></a>
          </div>
         
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+         <input
+        type="date"
+        id="test"
+        name="birthdate"
+        ng-model="birthDate"
+        popup="d MMM yyyy"
+        options="dateOptions"
+        opened="opened"
+        custom-datepicker/>
+      </div>
     </div>
     <div >
         <table class="table">
@@ -12,16 +28,27 @@
                 <tr><th>Champs:</th><th>Operateur</th><th>Valeur</th><th>&nbsp;</th></tr>
             </thead>
             <tbody>
-                <tr ng-repeat="line in lines">
+                
+                <tr ng-repeat="line in lines track by $index">
                     <td>
-                        <select ng-options="field as field.label for field in fields track by field.value" ng-model="line.field"></select>
+                        <select class="form-control" ng-options="field as field.label for field in fields track by field.value" ng-model="line.field"></select>
                     </td>
                     <td>
-                        <select ng-options="operator as operator.label for operator in operators track by $index" ng-model="line.operator"></select>
+                        <select class="form-control" ng-options="operator as operator.label for operator in operators track by operator.value" ng-model="line.operator"></select>
                     </td>
                     <td ng-switch="line.field.type">
-                        <input ng-switch-when="alpha" type="text" ng-model="line.value" >
-                        <select  ng-switch-when="choice" ng-options="choice as choice.label for choice in line.field.choices track by choice.value" ng-model="line.value"></select>
+                        <input class="form-control" placeholder="Selectionner un champs" ng-switch-default ng-disabled="true"/>
+                        <input class="form-control" placeholder="Entrer une valeur" ng-switch-when="alpha" type="text" ng-model="line.value" >
+                        <select class="form-control"  ng-switch-when="choice" ng-options="choice as choice.label for choice in line.field.choices track by choice.value" ng-model="line.value"></select>
+                       
+                        <p class="input-group" ng-switch-when="date">
+                            <input type="text" class="form-control" datepicker-popup="dd-MMMM-yyyy" ng-model="line.value" is-open="true" datepicker-options="dateOptions" ng-required="true" close-text="Fermer" />
+                           
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="openDatePicker($index)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                        
                     </td>
                     <td>
                         <a ng-click="remove($index)"> <i class="btn fa fa-trash"></i> </a>
@@ -33,4 +60,5 @@
             </tfoot>
         </table>
     </div>
+    
 </div>

@@ -137,7 +137,9 @@
         $scope.searchFields =[
           {label:'Code',value:'code',type:'alpha'},
           {label:'Libelle',value:'libelle',type:'alpha'},
-          {label:'Type',value:'type',type:'choice',choices:[{label:'Produit Fini',value:'PF'},{label:'Produit semi-fini',value:'SF'}]}
+          {label:'Type',value:'type',type:'choice',choices:[{label:'Produit Fini',value:'PF'},{label:'Produit semi-fini',value:'SF'}]},
+          {label:'Stock Physique',value:'stkphy',type:'integer'},
+          {label:'Date de creation',value:'datcre',type:'date'}
             
         ];
         
@@ -153,7 +155,7 @@
             Article.get({index:index}).$promise.then(function(result){
                 $scope.current=result.Result;
                 $scope.count = result.Count;
-                $scope.index=result.Index;
+                $scope.index=Number(result.Index);
             })
         }
         
@@ -198,9 +200,10 @@
                 $scope.count = result.Count;
             })
         };
-        $scope.$watch(self.index,function(){
+        $scope.$watch('index',function(){
             $log.log('index change:'+self.index);
-            $scope.get(self.index);
+           // $scope.get(self.index);
+           
         })
         $scope.first();
         
